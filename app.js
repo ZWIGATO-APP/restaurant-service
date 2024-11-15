@@ -25,7 +25,7 @@ app.use('/restaurants', restaurantRoutes);
 
 // Start the server if not in test mode
 // if (process.env.NODE_ENV !== 'test') {
-    const PORT = process.env.PORT || 3001;
+    const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => {
         console.log(`Server is running on http://localhost:${PORT}`);
     });
