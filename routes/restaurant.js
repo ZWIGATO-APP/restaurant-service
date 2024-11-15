@@ -8,19 +8,16 @@ const SECRET_KEY = "your_secret_key";
 
 // Middleware to check if the user is the owner
 const checkOwner = (req, res, next) => {
-  if (process.env.NODE_ENV !== "test") {
     // Implement your logic to check if the user is the owner
     // For this example, we will assume the owner_id is passed in the request
     const { role } = req.user; // In a real app, get this from the token or session
     if (role !== "restaurant_owner" && role !== "admin") {
       return res.status(403).json({ message: "Access denied" });
     }
-  }
   next();
 };
 
 const authenticateJWT = (req, res, next) => {
-  if (process.env.NODE_ENV !== "test") {
     const token = req.headers["authorization"]?.split(" ")[1];
     if (token) {
       jwt.verify(token, SECRET_KEY, (err, user) => {
@@ -33,15 +30,11 @@ const authenticateJWT = (req, res, next) => {
     } else {
       res.sendStatus(401);
     }
-  } else {
-    next();
-  }
 };
 
 // List all restaurants
 router.get("/", authenticateJWT, async (req, res) => {
   const restaurants = await Restaurant.find();
-  console.log('restaurants',restaurants)
   res.json(restaurants);
 });
 
